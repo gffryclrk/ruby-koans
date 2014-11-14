@@ -5,6 +5,20 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # class DiceSet
 #   code ...
 # end
+class DiceSet
+
+  def roll(quantity)
+    @values = []
+    quantity.times do
+      @values << ( 1 + rand(6))
+    end
+  end
+
+  def values
+    @values
+  end
+end
+
 
 class AboutDiceProject < Neo::Koan
   def test_can_create_a_dice_set
@@ -48,6 +62,10 @@ class AboutDiceProject < Neo::Koan
     # If the rolls are random, then it is possible (although not
     # likely) that two consecutive rolls are equal.  What would be a
     # better way to test this?
+
+    # That is a good question. What about testing against dice.values.object_id as it
+    # should change even if the numbers are the same? 
+    
   end
 
   def test_you_can_roll_different_numbers_of_dice
