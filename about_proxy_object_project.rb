@@ -13,13 +13,33 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # of the Proxy class is given in the AboutProxyObjectProject koan.
 
 class Proxy
+
+  attr_reader :messages
+
   def initialize(target_object)
     @object = target_object
     # ADD MORE CODE HERE
+    @messages = []
   end
-
   # WRITE CODE HERE
+  def method_missing(method_name, *args, &block)
+    @messages << method_name
+    @object.send method_name, *args, &block
+  end 
+  def called?(method_name)
+    @messages.include?(method_name)
+  end
+  def number_of_times_called(method_name)
+    @messages.count(method_name)
+  end
 end
+
+# This was really interesting and, to be honest, I found the above solution online
+# because I had no idea where to start. So I went back and read a bunch about
+# passing messages in the previous Koan and took more time to study that code and the
+# above code until it made sense. It's actually rather brilliant and is an entire facet
+# of Ruby that I had never really thought about before and am still not sure that I 
+# entirely appreciate. 
 
 # The proxy object should pass the following Koan:
 #
